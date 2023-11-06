@@ -21,4 +21,13 @@ public class Knight extends Piece{
         this.setSprite(sheet.getSubimage(3 * sheetScale, isWhite ? 0 : sheetScale,sheetScale,sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH));
     }
 
+    @Override
+    public boolean isValidMovement(int col, int row) {
+        return Math.abs(col - this.getCol()) * Math.abs(row - this.getRow()) == 2;
+    }
+
+    @Override
+    public boolean isMoveCollideWithPiece(int col, int row) {
+        return super.isMoveCollideWithPiece(col, row);
+    }
 }

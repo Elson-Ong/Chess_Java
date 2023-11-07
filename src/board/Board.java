@@ -19,6 +19,8 @@ public class Board extends JPanel {
 
     Input input = new Input(this);
 
+    private int enPassantTile = -1;
+
     public Board() {
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
 
@@ -66,7 +68,45 @@ public class Board extends JPanel {
         return p1.isWhite()==p2.isWhite();
     }
 
+    public int getTileNum(int col, int row){
+        return row * rows + col;
+    }
+
     public void makeMove(Move move){
+
+        if(move.getPiece().getName().equals("Pawn")) {
+            movePawn(move);
+        }
+        else {
+            move.getPiece().setCol(move.getNewCol());
+            move.getPiece().setRow(move.getNewRow());
+            move.getPiece().setxPos(move.getNewCol() * tileSize);
+            move.getPiece().setyPos(move.getNewRow() * tileSize);
+
+            move.getPiece().setIsFirstMove(false);
+
+            capture(move.getCapturePiece());
+        }
+    }
+
+    public void movePawn(Move move){
+
+        //en passant
+        int colorIndex = move.getPiece().isWhite() ? 1 : -1;
+
+        if(getTileNum(move.getNewCol(), move.getNewRow()) == enPassantTile)
+            move.setCapturePiece(getPiece(move.getNewCol(),move.getNewRow() + colorIndex));
+
+        if(Math.abs(move.getPiece().getRow() - move.getNewRow()) == 2)
+            enPassantTile = getTileNum(move.getNewCol(), move.getNewRow() + colorIndex);
+        else
+            enPassantTile = -1;
+
+        //promotion
+        colorIndex =move.getPiece().isWhite() ? 0 : 7;
+        if(move.getNewRow() == colorIndex)
+            promotePawn(move);
+
         move.getPiece().setCol(move.getNewCol());
         move.getPiece().setRow(move.getNewRow());
         move.getPiece().setxPos(move.getNewCol() * tileSize);
@@ -74,11 +114,16 @@ public class Board extends JPanel {
 
         move.getPiece().setIsFirstMove(false);
 
-        capture(move);
+        capture(move.getCapturePiece());
     }
 
-    public void capture(Move move){
-        pieceArrayList.remove(move.getCapturePiece());
+    private void promotePawn(Move move){
+        pieceArrayList.add(new Queen(this,move.getNewCol(),move.getNewRow(), move.getPiece().isWhite()));
+        capture(move.getPiece());
+    }
+
+    public void capture(Piece piece){
+        pieceArrayList.remove(piece);
     }
 
     public void addPieces() {
@@ -152,6 +197,10 @@ public class Board extends JPanel {
         for(Piece piece: pieceArrayList) {
             piece.paint(g2d);
         }
+    }
+
+    public int getEnPassantTile() {
+        return enPassantTile;
     }
 
 }

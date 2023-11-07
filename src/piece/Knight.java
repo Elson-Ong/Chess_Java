@@ -26,8 +26,4 @@ public class Knight extends Piece{
         return Math.abs(col - this.getCol()) * Math.abs(row - this.getRow()) == 2;
     }
 
-    @Override
-    public boolean isMoveCollideWithPiece(int col, int row) {
-        return super.isMoveCollideWithPiece(col, row);
-    }
 }

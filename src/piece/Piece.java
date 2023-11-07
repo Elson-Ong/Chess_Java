@@ -15,6 +15,7 @@ public class Piece {
     private boolean isWhite;
     private String name;
     private int value;
+    private boolean isFirstMove = true;
     private Board board;
 
     BufferedImage sheet;
@@ -103,6 +104,14 @@ public class Piece {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public boolean isFirstMove() {
+        return isFirstMove;
+    }
+
+    public void setIsFirstMove(boolean firstMove) {
+        isFirstMove = firstMove;
     }
 
     public Board getBoard() {

@@ -1,5 +1,6 @@
 package src.board;
 
+import src.check.CheckScanner;
 import src.piece.*;
 import  src.move.*;
 
@@ -20,6 +21,8 @@ public class Board extends JPanel {
     Input input = new Input(this);
 
     private int enPassantTile = -1;
+
+    CheckScanner checkScanner = new CheckScanner(this);
 
     public Board() {
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
@@ -49,15 +52,18 @@ public class Board extends JPanel {
 
     public boolean isValidMove(Move move){
 
-        if (sameTeam(move.getPiece(), move.getCapturePiece()))
+        if (sameTeam(move.getPiece(), move.getCapturePiece())) {
             return false;
-
-        if(!move.getPiece().isValidMovement(move.getNewCol(), move.getNewRow()))
+        }
+        if(!move.getPiece().isValidMovement(move.getNewCol(), move.getNewRow())) {
             return false;
-
-        if(move.getPiece().isMoveCollideWithPiece(move.getNewCol(), move.getNewRow()))
+        }
+        if(move.getPiece().isMoveCollideWithPiece(move.getNewCol(), move.getNewRow())) {
             return false;
-
+        }
+        if(checkScanner.isKingChecked(move)) {
+            return false;
+        }
         return true;
     }
 
@@ -70,6 +76,14 @@ public class Board extends JPanel {
 
     public int getTileNum(int col, int row){
         return row * rows + col;
+    }
+
+    public Piece findKing(boolean isWhite){
+        for (Piece p: pieceArrayList){
+            if(isWhite == p.isWhite() && p.getName().equals("King"))
+                return p;
+        }
+        return null;
     }
 
     public void makeMove(Move move){

@@ -26,27 +26,27 @@ public class Pawn extends Piece{
         int colorIndex = isWhite() ? 1 : -1;
 
         //normal pawn move of 1 step
-        if(this.getCol() == col && row == this.getRow() - colorIndex && getBoard().getPiece(col,row) == null)
+        if(this.getCol() == col && row == this.getRow() - colorIndex && getBoard().getPieceByPos(col,row) == null)
             return true;
 
         //first pawn move might be 2 steps
-        if(isFirstMove() && this.getCol() == col && row == this.getRow() - colorIndex * 2 && getBoard().getPiece(col,row + colorIndex) == null)
+        if(isFirstMove() && this.getCol() == col && row == this.getRow() - colorIndex * 2 && getBoard().getPieceByPos(col,row + colorIndex) == null)
             return true;
 
         //pawn capture to left
-        if(col == this.getCol() - 1 && row == this.getRow() - colorIndex && getBoard().getPiece(col,row) != null)
+        if(col == this.getCol() - 1 && row == this.getRow() - colorIndex && getBoard().getPieceByPos(col,row) != null)
             return true;
 
         //pawn capture to right
-        if(col == this.getCol() + 1 && row == this.getRow() - colorIndex && getBoard().getPiece(col,row) != null)
+        if(col == this.getCol() + 1 && row == this.getRow() - colorIndex && getBoard().getPieceByPos(col,row) != null)
             return true;
 
         //en passant left
-        if(getBoard().getTileNum(col,row) == getBoard().getEnPassantTile() && col == this.getCol() - 1 && row == this.getRow() - colorIndex && getBoard().getPiece(col, row + colorIndex) != null)
+        if(getBoard().getTileNum(col,row) == getBoard().getEnPassantTile() && col == this.getCol() - 1 && row == this.getRow() - colorIndex && getBoard().getPieceByPos(col, row + colorIndex) != null)
             return true;
 
         //en passant right
-        if(getBoard().getTileNum(col,row) == getBoard().getEnPassantTile() && col == this.getCol() + 1 && row == this.getRow() - colorIndex && getBoard().getPiece(col, row + colorIndex) != null)
+        if(getBoard().getTileNum(col,row) == getBoard().getEnPassantTile() && col == this.getCol() + 1 && row == this.getRow() - colorIndex && getBoard().getPieceByPos(col, row + colorIndex) != null)
             return true;
 
         return false;

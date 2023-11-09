@@ -14,6 +14,8 @@ public class Board extends JPanel {
     private int cols = 8;
     private int rows = 8;
 
+    private boolean isWhiteTurn;
+
     ArrayList<Piece> pieceArrayList  = new ArrayList<>();
 
     private Piece selectedPiece;
@@ -22,7 +24,7 @@ public class Board extends JPanel {
 
     private int enPassantTile = -1;
 
-    CheckScanner checkScanner = new CheckScanner(this);
+    public CheckScanner checkScanner = new CheckScanner(this);
 
     public Board() {
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
@@ -30,7 +32,17 @@ public class Board extends JPanel {
         this.addMouseListener(input);
         this.addMouseMotionListener(input);
 
+        this.isWhiteTurn = true;
+
         addPieces();
+    }
+
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
+
+    public void setWhiteTurn(boolean whiteTurn) {
+        isWhiteTurn = whiteTurn;
     }
 
     public Piece getSelectedPiece() {
@@ -41,7 +53,7 @@ public class Board extends JPanel {
         this.selectedPiece = selectedPiece;
     }
 
-    public Piece getPiece(int col, int row){
+    public Piece getPieceByPos(int col, int row){
 
         for (Piece p: pieceArrayList){
             if(p.getRow() == row && p.getCol() == col)
@@ -52,6 +64,9 @@ public class Board extends JPanel {
 
     public boolean isValidMove(Move move){
 
+        if(move.getPiece().isWhite() != isWhiteTurn){
+            return false;
+        }
         if (sameTeam(move.getPiece(), move.getCapturePiece())) {
             return false;
         }
@@ -91,25 +106,42 @@ public class Board extends JPanel {
         if(move.getPiece().getName().equals("Pawn")) {
             movePawn(move);
         }
-        else {
-            move.getPiece().setCol(move.getNewCol());
-            move.getPiece().setRow(move.getNewRow());
-            move.getPiece().setxPos(move.getNewCol() * tileSize);
-            move.getPiece().setyPos(move.getNewRow() * tileSize);
+        else if(move.getPiece().getName().equals("King")) {
+            moveKing(move);
+        }
+        move.getPiece().setCol(move.getNewCol());
+        move.getPiece().setRow(move.getNewRow());
+        move.getPiece().setxPos(move.getNewCol() * tileSize);
+        move.getPiece().setyPos(move.getNewRow() * tileSize);
 
-            move.getPiece().setIsFirstMove(false);
+        move.getPiece().setIsFirstMove(false);
 
-            capture(move.getCapturePiece());
+        capture(move.getCapturePiece());
+        isWhiteTurn = ! isWhiteTurn;
+    }
+
+    private  void moveKing(Move move){
+        if(Math.abs(move.getPiece().getCol() - move.getNewCol()) == 2){
+            Piece rook;
+            if(move.getPiece().getCol() < move.getNewCol()){
+                rook = getPieceByPos(7, move.getPiece().getRow());
+                rook.setCol(5);
+            }
+            else{
+                rook = getPieceByPos(0, move.getPiece().getRow());
+                rook.setCol(3);
+            }
+            rook.setxPos(rook.getCol() * tileSize);
         }
     }
 
-    public void movePawn(Move move){
+    private void movePawn(Move move){
 
         //en passant
         int colorIndex = move.getPiece().isWhite() ? 1 : -1;
 
         if(getTileNum(move.getNewCol(), move.getNewRow()) == enPassantTile)
-            move.setCapturePiece(getPiece(move.getNewCol(),move.getNewRow() + colorIndex));
+            move.setCapturePiece(getPieceByPos(move.getNewCol(),move.getNewRow() + colorIndex));
 
         if(Math.abs(move.getPiece().getRow() - move.getNewRow()) == 2)
             enPassantTile = getTileNum(move.getNewCol(), move.getNewRow() + colorIndex);
@@ -121,14 +153,6 @@ public class Board extends JPanel {
         if(move.getNewRow() == colorIndex)
             promotePawn(move);
 
-        move.getPiece().setCol(move.getNewCol());
-        move.getPiece().setRow(move.getNewRow());
-        move.getPiece().setxPos(move.getNewCol() * tileSize);
-        move.getPiece().setyPos(move.getNewRow() * tileSize);
-
-        move.getPiece().setIsFirstMove(false);
-
-        capture(move.getCapturePiece());
     }
 
     private void promotePawn(Move move){

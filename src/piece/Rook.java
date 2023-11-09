@@ -32,7 +32,7 @@ public class Rook extends Piece{
         // left
         if(this.getCol() > col){
             for(int c = this.getCol() - 1; c > col; c--){
-                if(getBoard().getPiece(c, this.getRow()) != null)
+                if(getBoard().getPieceByPos(c, this.getRow()) != null)
                     return true;
             }
         }
@@ -40,7 +40,7 @@ public class Rook extends Piece{
         // right
         if(this.getCol() < col){
             for(int c = this.getCol() + 1; c < col; c++){
-                if(getBoard().getPiece(c, this.getRow()) != null)
+                if(getBoard().getPieceByPos(c, this.getRow()) != null)
                     return true;
             }
         }
@@ -48,7 +48,7 @@ public class Rook extends Piece{
         // up
         if(this.getRow() > row){
             for(int r = this.getRow() - 1; r > row; r--){
-                if(getBoard().getPiece(this.getCol(), r) != null)
+                if(getBoard().getPieceByPos(this.getCol(), r) != null)
                     return true;
             }
         }
@@ -56,7 +56,7 @@ public class Rook extends Piece{
         // down
         if(this.getRow() < row){
             for(int r = this.getRow() + 1; r < row; r++){
-                if(getBoard().getPiece(this.getCol(), r) != null)
+                if(getBoard().getPieceByPos(this.getCol(), r) != null)
                     return true;
             }
         }

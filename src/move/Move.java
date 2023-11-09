@@ -2,7 +2,6 @@ package src.move;
 
 import src.piece.Piece;
 import src.board.Board;
-import src.piece.Rook;
 
 public class Move {
 
@@ -21,7 +20,7 @@ public class Move {
         this.newRow = newRow;
 
         this.piece = piece;
-        this.capture = board.getPiece(newCol, newRow);
+        this.capture = board.getPieceByPos(newCol, newRow);
     }
 
     public int getOldCol() {

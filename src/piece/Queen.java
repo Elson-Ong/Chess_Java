@@ -32,7 +32,7 @@ public class Queen extends Piece{
             // left
             if (this.getCol() > col) {
                 for (int c = this.getCol() - 1; c > col; c--) {
-                    if (getBoard().getPiece(c, this.getRow()) != null)
+                    if (getBoard().getPieceByPos(c, this.getRow()) != null)
                         return true;
                 }
             }
@@ -40,7 +40,7 @@ public class Queen extends Piece{
             // right
             if (this.getCol() < col) {
                 for (int c = this.getCol() + 1; c < col; c++) {
-                    if (getBoard().getPiece(c, this.getRow()) != null)
+                    if (getBoard().getPieceByPos(c, this.getRow()) != null)
                         return true;
                 }
             }
@@ -48,7 +48,7 @@ public class Queen extends Piece{
             // up
             if (this.getRow() > row) {
                 for (int r = this.getRow() - 1; r > row; r--) {
-                    if (getBoard().getPiece(this.getCol(), r) != null)
+                    if (getBoard().getPieceByPos(this.getCol(), r) != null)
                         return true;
                 }
             }
@@ -56,7 +56,7 @@ public class Queen extends Piece{
             // down
             if (this.getRow() < row) {
                 for (int r = this.getRow() + 1; r < row; r++) {
-                    if (getBoard().getPiece(this.getCol(), r) != null)
+                    if (getBoard().getPieceByPos(this.getCol(), r) != null)
                         return true;
                 }
             }
@@ -65,7 +65,7 @@ public class Queen extends Piece{
             // up left
             if(this.getCol() > col && this.getRow() > row){
                 for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                    if(getBoard().getPiece(this.getCol() - i, this.getRow() - i) != null){
+                    if(getBoard().getPieceByPos(this.getCol() - i, this.getRow() - i) != null){
                         return true;
                     }
                 }
@@ -74,7 +74,7 @@ public class Queen extends Piece{
             // up right
             if(this.getCol() < col && this.getRow() > row){
                 for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                    if(getBoard().getPiece(this.getCol() + i, this.getRow() - i) != null){
+                    if(getBoard().getPieceByPos(this.getCol() + i, this.getRow() - i) != null){
                         return true;
                     }
                 }
@@ -83,7 +83,7 @@ public class Queen extends Piece{
             // down left
             if(this.getCol() > col && this.getRow() < row){
                 for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                    if(getBoard().getPiece(this.getCol() - i, this.getRow() + i) != null){
+                    if(getBoard().getPieceByPos(this.getCol() - i, this.getRow() + i) != null){
                         return true;
                     }
                 }
@@ -92,7 +92,7 @@ public class Queen extends Piece{
             // down right
             if(this.getCol() < col && this.getRow() < row){
                 for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                    if(getBoard().getPiece(this.getCol() + i, this.getRow() + i) != null){
+                    if(getBoard().getPieceByPos(this.getCol() + i, this.getRow() + i) != null){
                         return true;
                     }
                 }

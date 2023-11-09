@@ -28,7 +28,7 @@ public class Input extends MouseAdapter {
         int col = e.getX() / board.tileSize;
         int row = e.getY() / board.tileSize;
 
-        Piece pieceXY = board.getPiece(col, row);
+        Piece pieceXY = board.getPieceByPos(col, row);
 
         if(pieceXY != null)
             board.setSelectedPiece(pieceXY);

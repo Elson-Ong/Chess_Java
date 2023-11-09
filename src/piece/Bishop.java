@@ -32,7 +32,7 @@ public class Bishop extends Piece{
         // up left
         if(this.getCol() > col && this.getRow() > row){
             for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                if(getBoard().getPiece(this.getCol() - i, this.getRow() - i) != null){
+                if(getBoard().getPieceByPos(this.getCol() - i, this.getRow() - i) != null){
                     return true;
                 }
             }
@@ -41,7 +41,7 @@ public class Bishop extends Piece{
         // up right
         if(this.getCol() < col && this.getRow() > row){
             for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                if(getBoard().getPiece(this.getCol() + i, this.getRow() - i) != null){
+                if(getBoard().getPieceByPos(this.getCol() + i, this.getRow() - i) != null){
                     return true;
                 }
             }
@@ -50,7 +50,7 @@ public class Bishop extends Piece{
         // down left
         if(this.getCol() > col && this.getRow() < row){
             for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                if(getBoard().getPiece(this.getCol() - i, this.getRow() + i) != null){
+                if(getBoard().getPieceByPos(this.getCol() - i, this.getRow() + i) != null){
                     return true;
                 }
             }
@@ -59,7 +59,7 @@ public class Bishop extends Piece{
         // down right
         if(this.getCol() < col && this.getRow() < row){
             for(int i = 1; i < Math.abs(this.getCol() - col); i++){
-                if(getBoard().getPiece(this.getCol() + i, this.getRow() + i) != null){
+                if(getBoard().getPieceByPos(this.getCol() + i, this.getRow() + i) != null){
                     return true;
                 }
             }

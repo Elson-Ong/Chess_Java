@@ -48,7 +48,7 @@ public class CheckScanner {
                 break;
             }
 
-            Piece piece = board.getPiece(kingCol + (i * colVal), kingRow + (i * rowVal));
+            Piece piece = board.getPieceByPos(kingCol + (i * colVal), kingRow + (i * rowVal));
 
             if(piece != null && piece!=board.getSelectedPiece()){
                 if(!board.sameTeam(piece, king) && (piece.getName().equals("Rook") || piece.getName().equals("Queen"))) {
@@ -65,7 +65,7 @@ public class CheckScanner {
             if(kingCol - (i * colVal) == col && kingRow - (i * rowVal) == row )
                 break;
 
-            Piece piece = board.getPiece(kingCol - (i * colVal), kingRow - (i * rowVal));
+            Piece piece = board.getPieceByPos(kingCol - (i * colVal), kingRow - (i * rowVal));
 
             if(piece != null && piece!=board.getSelectedPiece()){
                 if(!board.sameTeam(piece, king) && (piece.getName().equals("Bishop") || piece.getName().equals("Queen")))
@@ -79,14 +79,14 @@ public class CheckScanner {
 
     private boolean hitByKnight(int col, int row, Piece king, int kingCol, int kingRow){
 
-        return  checkKnight(board.getPiece(kingCol + 1, kingRow - 2), king, col, row) ||
-                checkKnight(board.getPiece(kingCol + 1, kingRow + 2), king, col, row) ||
-                checkKnight(board.getPiece(kingCol + 2, kingRow - 1), king, col, row) ||
-                checkKnight(board.getPiece(kingCol + 2, kingRow + 1), king, col, row) ||
-                checkKnight(board.getPiece(kingCol - 1, kingRow - 2), king, col, row) ||
-                checkKnight(board.getPiece(kingCol - 1, kingRow + 2), king, col, row) ||
-                checkKnight(board.getPiece(kingCol - 2, kingRow + 1), king, col, row) ||
-                checkKnight(board.getPiece(kingCol - 2, kingRow - 1), king, col, row) ;
+        return  checkKnight(board.getPieceByPos(kingCol + 1, kingRow - 2), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol + 1, kingRow + 2), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol + 2, kingRow - 1), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol + 2, kingRow + 1), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol - 1, kingRow - 2), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol - 1, kingRow + 2), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol - 2, kingRow + 1), king, col, row) ||
+                checkKnight(board.getPieceByPos(kingCol - 2, kingRow - 1), king, col, row) ;
     }
 
     private boolean checkKnight(Piece p, Piece k, int col, int row){
@@ -94,14 +94,14 @@ public class CheckScanner {
     }
 
     private boolean hitByKing(Piece king, int kingCol, int kingRow){
-        return  checkKing(board.getPiece(kingCol - 1, kingRow - 1), king) ||
-                checkKing(board.getPiece(kingCol - 1, kingRow), king) ||
-                checkKing(board.getPiece(kingCol - 1, kingRow + 1), king) ||
-                checkKing(board.getPiece(kingCol + 1, kingRow - 1), king) ||
-                checkKing(board.getPiece(kingCol + 1, kingRow), king) ||
-                checkKing(board.getPiece(kingCol + 1, kingRow + 1), king) ||
-                checkKing(board.getPiece(kingCol, kingRow - 1), king) ||
-                checkKing(board.getPiece(kingCol, kingRow + 1), king) ;
+        return  checkKing(board.getPieceByPos(kingCol - 1, kingRow - 1), king) ||
+                checkKing(board.getPieceByPos(kingCol - 1, kingRow), king) ||
+                checkKing(board.getPieceByPos(kingCol - 1, kingRow + 1), king) ||
+                checkKing(board.getPieceByPos(kingCol + 1, kingRow - 1), king) ||
+                checkKing(board.getPieceByPos(kingCol + 1, kingRow), king) ||
+                checkKing(board.getPieceByPos(kingCol + 1, kingRow + 1), king) ||
+                checkKing(board.getPieceByPos(kingCol, kingRow - 1), king) ||
+                checkKing(board.getPieceByPos(kingCol, kingRow + 1), king) ;
     }
 
     private boolean checkKing(Piece p, Piece k){
@@ -111,8 +111,8 @@ public class CheckScanner {
     private boolean hitByPawn(int col, int row, Piece king, int kingCol, int kingRow){
         int colorVal = king.isWhite() ? -1 : 1;
 
-        return  checkPawn(board.getPiece(kingCol + 1, kingRow + colorVal ), king, col, row) ||
-                checkPawn(board.getPiece(kingCol - 1, kingRow + colorVal ), king, col, row) ;
+        return  checkPawn(board.getPieceByPos(kingCol + 1, kingRow + colorVal ), king, col, row) ||
+                checkPawn(board.getPieceByPos(kingCol - 1, kingRow + colorVal ), king, col, row) ;
     }
 
     private  boolean checkPawn(Piece p, Piece k, int col, int row){
